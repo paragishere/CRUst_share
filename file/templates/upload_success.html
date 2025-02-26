@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Success</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: url("{{ url_for('static', filename='images/home.jpeg') }}") no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+
+        h2, p {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .qr-code {
+            margin: 10px 0;
+        }
+
+        a {
+            display: inline-block;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        a:hover {
+            background: #218838;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: lightblue;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Upload Successful! 🎉</h2>
+        <p>Your file is ready to download:</p>
+        <input type="text" id="fileUrl" value="{{ file_url }}" readonly>
+    <button onclick="copyToClipboard()">📋 Copy Link</button>
+        <div class="qr-code">
+            <p>Scan to download:</p>
+            <img src="/qr/{{ file_url.split('/')[-1] }}" alt="QR Code" style="width: 150px; height: 150px;">
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><a href="/privacy-policy">Privacy Policy</a> | <a href="/contact-us">Contact Us</a></p>
+    </div>
+
+</body>
+<script>
+function copyToClipboard() {
+    var copyText = document.getElementById("fileUrl");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // Mobile ke liye
+    document.execCommand("copy");
+
+    alert("Link copied: " + copyText.value); // User ko alert dikhane ke liye
+}
+</script>
+</html>
